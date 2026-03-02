@@ -4,37 +4,75 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Happy Birthday Klara</title>
+
   <style>
     body {
       margin: 0;
       font-family: system-ui, sans-serif;
-      background: linear-gradient(135deg, #4b6cb7, #182848);
+      background: linear-gradient(135deg, #ff8fb1, #ff4f88);
       color: white;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
+      overflow: hidden;
       text-align: center;
     }
+
     .card {
-      background: rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.15);
       padding: 35px;
       border-radius: 15px;
       backdrop-filter: blur(8px);
       max-width: 500px;
     }
-    a {
-      color: #ffd700;
-      font-weight: bold;
+
+    #heart {
+      font-size: 60px;
+      margin-top: 20px;
+      transition: transform 0.1s ease-out;
+      user-select: none;
+    }
+
+    p {
+      font-size: 18px;
+      margin-bottom: 8px;
     }
   </style>
 </head>
 <body>
+
   <div class="card">
-    <h1>Willkommen auf meiner Website 🎉</h1>
-    <p>Diese Seite läuft über <strong>GitHub Pages</strong> und ist von überall erreichbar.</p>
-    <p>Viel Spaß beim Anschauen!</p>
-    <p><a href="https://github.com">Mein GitHub</a></p>
+    <h1>Alles Gute zum Geburtstag, Klara ❤️</h1>
+    <p>Hier ist dein erstes kleines Geschenk 💗</p>
+    <p>Wische über das Herz!</p>
+    <div id="heart">❤️</div>
   </div>
+
+  <script>
+    let heart = document.getElementById("heart");
+    let size = 60;          // Startgröße
+    let targetSize = 260;   // Ab dieser Größe "platzt" das Herz
+
+    function growHeart() {
+      size += 5;
+      heart.style.transform = `scale(${size/60})`;
+
+      if (size >= targetSize) {
+        heart.innerHTML = "💥";
+        setTimeout(() => {
+          window.location.href = "seite2.html"; // Weiterleitung
+        }, 700);
+      }
+    }
+
+    // Touchsteuerung für iPhones
+    heart.addEventListener("touchstart", growHeart);
+    heart.addEventListener("touchmove", growHeart);
+
+    // Optional für PC (damit du testen kannst)
+    heart.addEventListener("mouseover", growHeart);
+  </script>
+
 </body>
 </html>
