@@ -9,20 +9,24 @@
     body {
       margin: 0;
       font-family: system-ui, sans-serif;
-      background: linear-gradient(135deg, #ffb6e6, #ff7ccf);
+      background: linear-gradient(135deg, #b30000, #ff1a1a); /* ROTER Hintergrund */
       color: white;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
       text-align: center;
+      position: relative; /* wichtig für die Geschenkboxen */
     }
+
     .box {
       padding: 30px;
       border-radius: 15px;
       background: rgba(255,255,255,0.2);
       backdrop-filter: blur(10px);
+      max-width: 80%;
     }
+
     /* TIMER oben rechts */
     #timer {
       position: fixed;
@@ -34,19 +38,55 @@
       padding: 10px 14px;
       border-radius: 12px;
       backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px); /* wichtig für iPhone! */
+      -webkit-backdrop-filter: blur(6px);
+    }
+
+    /* Geschenk-Kästchen */
+    .gift-box {
+      position: fixed;
+      padding: 12px 18px;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      border-radius: 12px;
+      font-weight: bold;
+      font-size: 18px;
+      border: 1px solid rgba(255,255,255,0.35);
+      cursor: pointer;
+      user-select: none;
+    }
+
+    /* Positionen der drei Geschenke */
+    #gift1 { /* unten rechts */
+      bottom: 20px;
+      right: 20px;
+    }
+
+    #gift2 { /* unten links */
+      bottom: 20px;
+      left: 20px;
+    }
+
+    #gift3 { /* oben links */
+      top: 20px;
+      left: 20px;
     }
   </style>
 </head>
 <body>
 
-   <!-- TIMER -->
+  <!-- TIMER -->
   <div id="timer">59 Tage</div>
 
   <div class="box">
     <h1>💗 Alles Gute zum Geburtstag! 💗</h1>
-    <pKlicke auf die einzelnen Boxen!</p>
+    <p>Klicke auf die einzelnen Boxen!</p>
   </div>
+
+  <!-- Geschenk-Kästchen -->
+  <div id="gift1" class="gift-box">Geschenk 1</div>
+  <div id="gift2" class="gift-box">Geschenk 2</div>
+  <div id="gift3" class="gift-box">Geschenk 3</div>
 
   <script>
     /* -------------------------
@@ -57,13 +97,12 @@
     // Startpunkt: 59 Tage ab heute
     const startDays = 59;
 
-    // Heute (nur Jahr-Monat-Tag vergleichen)
     function getToday() {
       let now = new Date();
       return new Date(now.getFullYear(), now.getMonth(), now.getDate());
     }
 
-    // Speichere das Startdatum im Browser (einmalig)
+    // Startdatum speichern (einmalig)
     if (!localStorage.getItem("timerStartDate")) {
       localStorage.setItem("timerStartDate", getToday().getTime());
     }
@@ -72,7 +111,6 @@
       const startDate = new Date(parseInt(localStorage.getItem("timerStartDate")));
       const today = getToday();
 
-      // Vergangene Tage berechnen
       const msPerDay = 1000 * 60 * 60 * 24;
       let pastDays = Math.floor((today - startDate) / msPerDay);
 
@@ -83,10 +121,7 @@
     }
 
     updateTimer();
-
-    // Alle 60 Sekunden neu prüfen (falls Handy 0:00 überschreitet)
-    setInterval(updateTimer, 60000);
-
+    setInterval(updateTimer, 60000); // alle 60s auffrischen
   </script>
 
 </body>
