@@ -19,6 +19,20 @@
       text-align: center;
     }
 
+    /* TIMER oben rechts */
+    #timer {
+      position: fixed;
+      top: 15px;
+      right: 18px;
+      font-size: 22px;
+      font-weight: bold;
+      background: rgba(255, 255, 255, 0.25);
+      padding: 10px 14px;
+      border-radius: 12px;
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px); /* wichtig für iPhone! */
+    }
+
     .card {
       background: rgba(255,255,255,0.15);
       padding: 35px;
@@ -42,6 +56,9 @@
 </head>
 <body>
 
+  <!-- TIMER -->
+  <div id="timer">59 Tage</div>
+
   <div class="card">
     <h1>Alles Gute zum Geburtstag, Klara ❤️</h1>
     <p>Hier ist dein erstes kleines Geschenk 💗</p>
@@ -50,28 +67,73 @@
   </div>
 
   <script>
+    /* -------------------------
+       TIMER CODE (funktioniert jeden Tag um 0:00)
+    ------------------------- */
+    const timerElement = document.getElementById("timer");
+
+    // Startpunkt: 59 Tage ab heute
+    const startDays = 59;
+
+    // Heute (nur Jahr-Monat-Tag vergleichen)
+    function getToday() {
+      let now = new Date();
+      return new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    }
+
+    // Speichere das Startdatum im Browser (einmalig)
+    if (!localStorage.getItem("timerStartDate")) {
+      localStorage.setItem("timerStartDate", getToday().getTime());
+    }
+
+    function updateTimer() {
+      const startDate = new Date(parseInt(localStorage.getItem("timerStartDate")));
+      const today = getToday();
+
+      // Vergangene Tage berechnen
+      const msPerDay = 1000 * 60 * 60 * 24;
+      let pastDays = Math.floor((today - startDate) / msPerDay);
+
+      let remaining = startDays - pastDays;
+      if (remaining < 0) remaining = 0;
+
+      timerElement.textContent = remaining + " Tage";
+    }
+
+    updateTimer();
+
+    // Alle 60 Sekunden neu prüfen (falls Handy 0:00 überschreitet)
+    setInterval(updateTimer, 60000);
+
+
+
+    /* -------------------------
+       HERZ CODE (Wischen → wächst → platzt)
+    ------------------------- */
     let heart = document.getElementById("heart");
-    let size = 60;          // Startgröße
-    let targetSize = 260;   // Ab dieser Größe "platzt" das Herz
+    let size = 60;
+    let targetSize = 260;
 
     function growHeart() {
       size += 5;
       heart.style.transform = `scale(${size/60})`;
 
       if (size >= targetSize) {
+        heart.innerHTML = "💥";
         setTimeout(() => {
-          window.location.href = "seite2.html"; // Weiterleitung
+          window.location.href = "seite2.html";
         }, 700);
       }
     }
 
-    // Touchsteuerung für iPhones
+    // Touch für iPhone
     heart.addEventListener("touchstart", growHeart);
     heart.addEventListener("touchmove", growHeart);
 
-    // Optional für PC (damit du testen kannst)
+    // Für Desktop-Test
     heart.addEventListener("mouseover", growHeart);
   </script>
 
 </body>
 </html>
+``
