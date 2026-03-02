@@ -23,14 +23,77 @@
       background: rgba(255,255,255,0.2);
       backdrop-filter: blur(10px);
     }
+    /* TIMER oben rechts */
+    #timer {
+      position: fixed;
+      top: 15px;
+      right: 18px;
+      font-size: 22px;
+      font-weight: bold;
+      background: rgba(255, 255, 255, 0.25);
+      padding: 10px 14px;
+      border-radius: 12px;
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px); /* wichtig für iPhone! */
+    }
   </style>
 </head>
 <body>
+
+   <!-- TIMER -->
+  <div id="timer">59 Tage</div>
+
+  <div class="card">
+    <h1>Wische über das Herz!</h1>
+    <div id="heart">❤️</div>
+  </div>
+
 
   <div class="box">
     <h1>💗 Alles Gute zum Geburtstag! 💗</h1>
     <p>🌸✨ Klicke auf die einzelnen Boxen! 🌸✨</p>
   </div>
+
+  <script>
+    /* -------------------------
+       TIMER CODE (funktioniert jeden Tag um 0:00)
+    ------------------------- */
+    const timerElement = document.getElementById("timer");
+
+    // Startpunkt: 59 Tage ab heute
+    const startDays = 59;
+
+    // Heute (nur Jahr-Monat-Tag vergleichen)
+    function getToday() {
+      let now = new Date();
+      return new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    }
+
+    // Speichere das Startdatum im Browser (einmalig)
+    if (!localStorage.getItem("timerStartDate")) {
+      localStorage.setItem("timerStartDate", getToday().getTime());
+    }
+
+    function updateTimer() {
+      const startDate = new Date(parseInt(localStorage.getItem("timerStartDate")));
+      const today = getToday();
+
+      // Vergangene Tage berechnen
+      const msPerDay = 1000 * 60 * 60 * 24;
+      let pastDays = Math.floor((today - startDate) / msPerDay);
+
+      let remaining = startDays - pastDays;
+      if (remaining < 0) remaining = 0;
+
+      timerElement.textContent = remaining + " Tage";
+    }
+
+    updateTimer();
+
+    // Alle 60 Sekunden neu prüfen (falls Handy 0:00 überschreitet)
+    setInterval(updateTimer, 60000);
+
+  </script>
 
 </body>
 </html>
