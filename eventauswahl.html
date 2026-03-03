@@ -1,9 +1,70 @@
 <!DOCTYPE html>
-<html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Wähle ein Event 💗</title>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, sans-serif;
+      background: linear-gradient(135deg, #b30000, #ff1a1a);
+      color: white;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding-top: 60px;
+      height: 100vh;
+    }
+
+    h1 {
+      margin-bottom: 25px;
+      font-size: 30px;
+    }
+
+    .event-list {
+      width: 90%;
+      max-width: 450px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .event {
+      padding: 18px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      border: 1px solid rgba(255,255,255,0.4);
+      font-size: 20px;
+      font-weight: bold;
+      cursor: pointer;
+      user-select: none;
+      transition: 0.15s;
+    }
+
+    .event:active {
+      transform: scale(0.96);
+      background: rgba(255, 255, 255, 0.35);
+    }
+  </style>
+</head>
 <body>
 
-<h1>Hier ist eines deiner Geschenke</h1>
-<p>Du da</p>
+  <div>
+    <h1>🎀 Wähle ein Event für den 01.05.🎀</h1>
+
+    <div class="event-list">
+      <div class="event" onclick="location.href='event1.html'">Yachthafen Speyer</div>
+      <div class="event" onclick="location.href='event2.html'">Wine Bank</div>
+      <div class="event" onclick="location.href='event3.html'"></div>
+      <div class="event" onclick="location.href='event4.html'"></div>
+    </div>
+  </div>
 
 </body>
 </html>
