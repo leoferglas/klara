@@ -9,14 +9,14 @@
     body {
       margin: 0;
       font-family: system-ui, sans-serif;
-      background: linear-gradient(135deg, #b30000, #ff1a1a); /* ROTER Hintergrund */
+      background: linear-gradient(135deg, #b30000, #ff1a1a);
       color: white;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
       text-align: center;
-      position: relative; /* wichtig für die Geschenkboxen */
+      position: relative;
     }
 
     .box {
@@ -27,7 +27,6 @@
       max-width: 80%;
     }
 
-    /* TIMER oben rechts */
     #timer {
       position: fixed;
       top: 15px;
@@ -41,13 +40,11 @@
       -webkit-backdrop-filter: blur(6px);
     }
 
-    /* Geschenk-Kästchen */
     .gift-box {
       position: fixed;
       padding: 12px 18px;
       background: rgba(255, 255, 255, 0.2);
       backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
       border-radius: 12px;
       font-weight: bold;
       font-size: 18px;
@@ -56,18 +53,17 @@
       user-select: none;
     }
 
-    /* Positionen der drei Geschenke */
-    #gift1 { /* unten rechts */
+    #gift1 {
       bottom: 20px;
       right: 20px;
     }
 
-    #gift2 { /* unten links */
+    #gift2 {
       bottom: 20px;
       left: 20px;
     }
 
-    #gift3 { /* oben links */
+    #gift3 {
       top: 20px;
       left: 20px;
     }
@@ -75,7 +71,6 @@
 </head>
 <body>
 
-  <!-- TIMER -->
   <div id="timer">59 Tage</div>
 
   <div class="box">
@@ -83,18 +78,16 @@
     <p>Klicke auf die einzelnen Boxen!</p>
   </div>
 
-  <!-- Geschenk-Kästchen -->
   <div id="gift1" class="gift-box">Geschenk 1</div>
   <div id="gift2" class="gift-box">Geschenk 2</div>
   <div id="gift3" class="gift-box">Geschenk 3</div>
 
   <script>
-    /* -------------------------
-       TIMER CODE (funktioniert jeden Tag um 0:00)
-    ------------------------- */
-    const timerElement = document.getElementById("timer");
+    document.getElementById("gift1").addEventListener("click", () => {
+      window.location.href = "code.html";  // Weiterleitung zur Code-Seite
+    });
 
-    // Startpunkt: 59 Tage ab heute
+    const timerElement = document.getElementById("timer");
     const startDays = 59;
 
     function getToday() {
@@ -102,7 +95,6 @@
       return new Date(now.getFullYear(), now.getMonth(), now.getDate());
     }
 
-    // Startdatum speichern (einmalig)
     if (!localStorage.getItem("timerStartDate")) {
       localStorage.setItem("timerStartDate", getToday().getTime());
     }
@@ -121,7 +113,7 @@
     }
 
     updateTimer();
-    setInterval(updateTimer, 60000); // alle 60s auffrischen
+    setInterval(updateTimer, 60000);
   </script>
 
 </body>
