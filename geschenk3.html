@@ -1,11 +1,78 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dein 3. Geschenk</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: system-ui, sans-serif;
+      background: linear-gradient(135deg, #ff9a9e, #fecfef, #f6d5f7);
+      background-size: 200% 200%;
+      animation: bgShift 12s ease infinite;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 20px;
+      color: #4a2c2c;
+    }
+
+    @keyframes bgShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .box {
+      background: rgba(255, 255, 255, 0.35);
+      padding: 35px;
+      border-radius: 20px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+      max-width: 600px;
+      width: 100%;
+    }
+
+    h1 {
+      margin-top: 0;
+      font-size: 32px;
+    }
+
+    p {
+      font-size: 20px;
+      line-height: 1.5;
+      margin-top: 12px;
+    }
+
+    /* Zurück-Button wie in Beispiel */
+    a.back {
+      display: inline-block;
+      margin-top: 22px;
+      color: #4a2c2c;
+      font-weight: bold;
+      text-decoration: none;
+      font-size: 18px;
+    }
+
+    a.back:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
+
 <body>
-    
+
+  <div class="box">
+    <h1>🎁 Dein 3. Geschenk</h1>
+
+    <p>Das dritte Geschenk gibt dir <b>Alysha</b>.</p>
+
+   ⬅ Zurück zur Geschenkauswahl</a>
+  </div>
+
 </body>
 </html>
