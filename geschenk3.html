@@ -1,77 +1,201 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
   <title>Dein 3. Geschenk</title>
 
   <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+
     body {
-      margin: 0;
-      font-family: system-ui, sans-serif;
+      font-family: system-ui, -apple-system, sans-serif;
       background: linear-gradient(135deg, #ff9a9e, #fecfef, #f6d5f7);
       background-size: 200% 200%;
       animation: bgShift 12s ease infinite;
-      min-height: 100vh;
+      min-height: 100dvh;
       display: flex;
       justify-content: center;
       align-items: center;
+
+      /* Safe-Area für Notch & Home-Bar */
+      padding:
+        calc(20px + env(safe-area-inset-top))
+        calc(20px + env(safe-area-inset-right))
+        calc(20px + env(safe-area-inset-bottom))
+        calc(20px + env(safe-area-inset-left));
+
       text-align: center;
-      padding: 20px;
       color: #4a2c2c;
+      -webkit-tap-highlight-color: transparent;
     }
 
     @keyframes bgShift {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
 
-    .box {
+    .wrapper {
+      width: 100%;
+      max-width: 480px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: clamp(16px, 4vw, 28px);
+    }
+
+    .title-box {
       background: rgba(255, 255, 255, 0.35);
-      padding: 35px;
-      border-radius: 20px;
-      backdrop-filter: blur(12px);
-      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-      max-width: 600px;
+      padding: clamp(16px, 5vw, 25px);
+      border-radius: 18px;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
       width: 100%;
     }
 
-    h1 {
-      margin-top: 0;
-      font-size: 32px;
+    .title-box h1 {
+      margin: 0 0 8px 0;
+      font-size: clamp(1.3rem, 6vw, 1.8rem);
+      line-height: 1.2;
     }
 
-    p {
-      font-size: 20px;
-      line-height: 1.5;
-      margin-top: 12px;
+    .title-box p {
+      margin: 0;
+      font-size: clamp(0.9rem, 4vw, 1rem);
+      opacity: 0.8;
     }
 
-    /* Zurück-Button wie in Beispiel */
-    a.back {
-      display: inline-block;
-      margin-top: 22px;
+    /* Karte: Breite fluid, Höhe über aspect-ratio */
+    .card-scene {
+      /* Maximal 75vw breit, aber nie breiter als 300px */
+      width: min(75vw, 300px);
+      /* Seitenverhältnis wie eine echte Spielkarte (2.5:3.5) */
+      aspect-ratio: 5 / 7;
+      perspective: 1000px;
+    }
+
+    .card {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.8s ease;
+      border-radius: 16px;
+      cursor: pointer;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.2);
+    }
+
+    .card.flipped {
+      transform: rotateY(180deg);
+      cursor: default;
+    }
+
+    .card-face {
+      position: absolute;
+      inset: 0;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      border-radius: 16px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: clamp(14px, 4vw, 24px);
+    }
+
+    .card-back {
+      background: linear-gradient(135deg, #ffc1cc, #ffd6e8);
+      font-size: clamp(40px, 16vw, 70px);
+    }
+
+    .card-front {
+      transform: rotateY(180deg);
+      background: white;
       color: #4a2c2c;
-      font-weight: bold;
-      text-decoration: underline;
-      font-size: 18px;
+      font-size: clamp(14px, 4vw, 18px);
+      line-height: 1.5;
+      font-weight: 600;
+      flex-direction: column;
+      gap: 6px;
     }
 
-    a.back:hover {
-      text-decoration: underline;
+    button {
+      padding: clamp(12px, 3.5vw, 14px) clamp(20px, 6vw, 28px);
+      background: white;
+      border: none;
+      border-radius: 12px;
+      font-size: clamp(15px, 4vw, 17px);
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+      transition: 0.2s;
+      min-height: 44px; /* Apple-Mindest-Tappgröße */
+      color: #4a2c2c;
     }
+
+    button:active {
+      background: #fff5f7;
+      transform: translateY(-2px);
+    }
+
+    a.back {
+      display: inline-flex;
+      align-items: center;
+      min-height: 44px;
+      padding: 8px 10px;
+      color: #4a2c2c;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      font-weight: bold;
+      font-size: clamp(14px, 3.8vw, 16px);
+      border-radius: 8px;
+    }
+
+    a.back:active { opacity: 0.7; }
   </style>
 </head>
 
 <body>
+  <div class="wrapper">
 
-  <div class="box">
-    <h1>🎁 Dein 3. Geschenk</h1>
+    <div class="title-box">
+      <h1>🎁 Dein 3. Geschenk</h1>
+      <p>Ziehe eine Karte.</p>
+    </div>
 
-    <p>🌹🌷Was könnte das wohl sein? Warte einfach auf Alysha 😁 🌷🌹</p>
-  <a class="back" href="geschenkauswahl.html">⬅ Zurück zur Geschenkauswahl</a>
+    <div class="card-scene">
+      <div class="card" id="card">
+        <div class="card-face card-back">💌</div>
+        <div class="card-face card-front" id="message">
+          DATE! <br> Zieh dich schick an! 💃 <br>
+          Wir gehen am Samstag, den 21.03. zum
+          DONELLO am Yachthafen – Speyer 🤵
+        </div>
+      </div>
+    </div>
+
+    <button id="draw">Karte ziehen</button>
+
+    <a class="back" href="geschenkauswahl.html">⬅ Zurück zur Geschenkauswahl</a>
+
   </div>
 
+  <script>
+    const card    = document.getElementById("card");
+    const drawBtn = document.getElementById("draw");
+
+    function flip() {
+      if (card.classList.contains("flipped")) return;
+      card.classList.add("flipped");
+      drawBtn.disabled      = true;
+      drawBtn.style.opacity = "0.4";
+      drawBtn.style.cursor  = "default";
+    }
+
+    drawBtn.addEventListener("click", flip);
+    card.addEventListener("click", flip);
+  </script>
 </body>
 </html>

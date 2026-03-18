@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
   <title>Geschenk 1</title>
 
   <style>
@@ -33,33 +33,33 @@
       /* Vertikale Anordnung */
       display: flex;
       flex-direction: column;
-      align-items: center;   /* horizontal zentriert */
-      justify-content: center; /* vertikal zentriert */
+      align-items: center;
+      justify-content: center;
       gap: var(--gap);
 
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
       color: #fff;
       text-align: center;
+      -webkit-tap-highlight-color: transparent; /* kein blauer Flash beim Tippen */
     }
 
     /* Inhaltliche Box */
     .box {
       background: rgba(255, 255, 255, 0.22);
       backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px); /* iOS */
+      -webkit-backdrop-filter: blur(8px);
       border-radius: var(--box-radius);
 
       width: 100%;
-      max-width: 420px;   /* auf iPhone 14 bleibt es angenehm schmal */
+      max-width: 420px;
       padding: 28px 24px;
 
-      /* leichte Tiefe */
       box-shadow: 0 10px 30px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.15);
     }
 
     .box h1 {
       margin: 0 0 12px 0;
-      font-size: clamp(22px, 5.5vw, 32px); /* responsive */
+      font-size: clamp(22px, 5.5vw, 32px);
       line-height: 1.2;
     }
 
@@ -69,7 +69,6 @@
       line-height: 1.45;
     }
 
-    /* Der "Zurück"-Bereich liegt als eigener Block unter der Box */
     .back {
       width: 100%;
       max-width: 420px;
@@ -81,15 +80,15 @@
       color: #fff;
       text-decoration: underline;
       text-underline-offset: 3px;
-      /* etwas „Touch“-Fläche */
       padding: 8px 10px;
       border-radius: 8px;
+      min-height: 44px;         /* Apple-empfohlene Mindest-Tappgröße */
+      display: inline-flex;
+      align-items: center;
     }
 
-    /* Optional: leichtes Hover/Active-Feedback (auch für iOS sinnvoll) */
     .back a:active { opacity: 0.8; }
 
-    /* Kleiner Sicherheitsabstand am unteren Rand, falls die Tastleiste eingeblendet wird */
     @supports (padding: max(0px)) {
       body { padding-bottom: max(var(--page-padding), env(safe-area-inset-bottom)); }
     }

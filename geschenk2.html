@@ -2,174 +2,141 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Dein 3. Geschenk</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <title>Dein 2. Geschenk</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,500&family=Lora:ital@1&display=swap" rel="stylesheet">
 
   <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
     body {
-      margin: 0;
-      font-family: system-ui, sans-serif;
+      font-family: 'Playfair Display', Georgia, serif;
       background: linear-gradient(135deg, #ff9a9e, #fecfef, #f6d5f7);
       background-size: 200% 200%;
       animation: bgShift 12s ease infinite;
-      min-height: 100vh;
+      min-height: 100dvh;
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 20px;
+      padding:
+        calc(24px + env(safe-area-inset-top))
+        calc(24px + env(safe-area-inset-right))
+        calc(24px + env(safe-area-inset-bottom))
+        calc(24px + env(safe-area-inset-left));
       text-align: center;
       color: #4a2c2c;
+      overflow: hidden;
+      -webkit-tap-highlight-color: transparent;
     }
 
     @keyframes bgShift {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
 
-    .wrapper {
-      max-width: 800px;
-      width: 100%;
+    .petal {
+      position: fixed;
+      top: -60px;
+      font-size: 22px;
+      animation: fall linear infinite;
+      pointer-events: none;
+      user-select: none;
+      opacity: 0.85;
     }
 
-    .title-box {
-      background: rgba(255, 255, 255, 0.35);
-      padding: 25px;
-      border-radius: 18px;
-      backdrop-filter: blur(10px);
-      margin-bottom: 35px;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    @keyframes fall {
+      0%   { transform: translateY(0) rotate(0deg);       opacity: 0.9; }
+      80%  { opacity: 0.7; }
+      100% { transform: translateY(110vh) rotate(360deg); opacity: 0;   }
     }
 
-    .card-scene {
-      width: 280px;
-      height: 410px;
-      perspective: 1000px;
-      margin: 0 auto;
-    }
-
-    .card {
-      width: 100%;
-      height: 100%;
+    .box {
       position: relative;
-      transform-style: preserve-3d;
-      transition: transform 0.8s ease;
-      border-radius: 16px;
-      cursor: pointer;
-      box-shadow: 0 12px 30px rgba(0,0,0,0.2);
+      z-index: 1;
+      background: rgba(255, 255, 255, 0.38);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-radius: 22px;
+      padding: clamp(28px, 8vw, 44px) clamp(22px, 7vw, 40px);
+      box-shadow: 0 8px 32px rgba(200, 80, 100, 0.18), inset 0 1px 0 rgba(255,255,255,0.6);
+      width: min(100%, 420px);
+      animation: fadeUp 0.9s ease both;
     }
 
-    .card.flipped {
-      transform: rotateY(180deg);
-      cursor: default;
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
 
-    .card-face {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      backface-visibility: hidden;
-      border-radius: 16px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
+    .emoji {
+      font-size: clamp(48px, 18vw, 72px);
+      line-height: 1;
+      margin-bottom: clamp(14px, 4vw, 20px);
+      display: block;
     }
 
-    .card-back {
-      background: linear-gradient(135deg, #ffc1cc, #ffd6e8);
-      font-size: 70px;
+    h1 {
+      font-size: clamp(1.3rem, 6vw, 1.85rem);
+      line-height: 1.25;
+      margin-bottom: clamp(10px, 3vw, 16px);
     }
 
-    .card-front {
-      transform: rotateY(180deg);
-      background: white;
-      color: #4a2c2c;
-      font-size: 20px;
-      padding: 25px;
-      line-height: 1.4;
-      font-weight: 600;
-    }
-
-    button {
-      margin-top: 25px;
-      padding: 12px 20px;
-      background: white;
-      border: none;
-      border-radius: 12px;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.15);
-      transition: 0.2s;
-    }
-
-    button:hover {
-      background: #fff5f7;
-      transform: translateY(-2px);
+    p {
+      font-family: 'Lora', Georgia, serif;
+      font-style: italic;
+      font-size: clamp(1rem, 4.5vw, 1.15rem);
+      line-height: 1.55;
+      opacity: 0.85;
     }
 
     a.back {
-      display: inline-block;
-      margin-top: 18px;
+      display: inline-flex;
+      align-items: center;
+      min-height: 44px;
+      margin-top: clamp(18px, 5vw, 26px);
+      padding: 8px 12px;
       color: #4a2c2c;
-      text-decoration: underline;
+      font-family: 'Lora', Georgia, serif;
+      font-size: clamp(14px, 3.8vw, 16px);
       font-weight: bold;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      border-radius: 8px;
     }
 
-    a.back:hover {
-      text-decoration: underline;
-    }
+    a.back:active { opacity: 0.7; }
   </style>
 </head>
-
 <body>
 
-  <div class="wrapper">
-
-    <div class="title-box">
-      <h1>🎁 Dein 2. Geschenk</h1>
-      <p>Ziehe eine Karte.</p>
-    </div>
-
-    <div class="card-scene">
-      <div class="card" id="card">
-        <div class="card-face card-back">💌</div>
-
-        <div class="card-face card-front" id="message">
-            DATE! <br> Zieh dich schick an! 💃 <br>
-          Wir gehen am Samstag, den 21.03. zum
-          DONELLO am Yachthafen - Speyer 🤵
-        </div>
-      </div>
-    </div>
-
-    <button id="draw">Karte ziehen</button>
-
-    <br>
+  <div class="box">
+    <span class="emoji">💐</span>
+    <h1>🎁 Dein 2. Geschenk</h1>
+    <p>Dein nächstes Geschenk liegt vor der Hoftür – schau mal nach! 🌸</p>
     <a class="back" href="geschenkauswahl.html">⬅ Zurück zur Geschenkauswahl</a>
-
   </div>
 
   <script>
-    const card = document.getElementById("card");
-    const drawBtn = document.getElementById("draw");
+    const petals = ['🌸', '🌺', '🌷', '🌹', '🪷'];
 
-    drawBtn.addEventListener("click", () => {
-      card.classList.add("flipped");
-      drawBtn.disabled = true;
-      drawBtn.style.opacity = 0.4;
-      drawBtn.style.cursor = "default";
-    });
+    function spawnPetal() {
+      const el = document.createElement('div');
+      el.classList.add('petal');
+      el.textContent = petals[Math.floor(Math.random() * petals.length)];
 
-    // Karte selbst nur einmal klickbar
-    card.addEventListener("click", () => {
-      if (!card.classList.contains("flipped")) {
-        card.classList.add("flipped");
-        drawBtn.disabled = true;
-        drawBtn.style.opacity = 0.4;
-      }
-    });
+      const size     = 16 + Math.random() * 14;
+      const left     = Math.random() * 100;
+      const duration = 4 + Math.random() * 5;
+      const delay    = Math.random() * 6;
+
+      el.style.cssText = `left:${left}vw;font-size:${size}px;animation-duration:${duration}s;animation-delay:${delay}s;`;
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), (duration + delay) * 1000);
+    }
+
+    for (let i = 0; i < 18; i++) spawnPetal();
+    setInterval(spawnPetal, 600);
   </script>
 
 </body>
